@@ -1,0 +1,71 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Desabilitar listagem de diretórios
+    Options -Indexes
+
+    DirectoryIndex index.php index.html
+
+    # Proteger arquivos sensíveis
+    RewriteRule "^(\.env|\.htaccess|\.git|\.gitignore|config/database|\.json)$" - [F,L]
+    
+    # Bloquear acesso a diretórios sensíveis
+    RewriteRule "^(config|includes|scripts|data)(/|$)" - [F,L]
+
+    # GLPI Suporte
+    RewriteRule ^suporte/?$ /suporte/public/index.php [L]
+    RewriteRule ^suporte/(.*)$ /suporte/public/$1 [L]
+
+    # Redirecionar logout para arquivo seguro
+    RewriteRule ^logout/?$ /logout.php [L]
+
+    # Se não for um arquivo ou diretório existente, redirecionar para index.php
+    # Mas excluir assets, uploads e outros recursos
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !(\.jpg|\.jpeg|\.png|\.gif|\.css|\.js|\.svg|\.woff|\.woff2|\.ttf)$ [NC]
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+
+# Tratamento de erros (redireciona para index.php em vez de tela branca)
+ErrorDocument 400 /index.php
+ErrorDocument 401 /index.php
+ErrorDocument 403 /index.php
+ErrorDocument 404 /index.php
+ErrorDocument 405 /index.php
+ErrorDocument 500 /index.php
+ErrorDocument 502 /index.php
+ErrorDocument 503 /index.php
+
+# Headers de segurança
+<IfModule mod_headers.c>
+    # Prevenir cache
+    Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+    
+    # Segurança
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "no-referrer-when-downgrade"
+</IfModule>
+
+# Compressão de arquivos estáticos
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Tipos MIME
+<IfModule mod_mime.c>
+    AddType application/javascript js
+    AddType text/css css
+    AddEncoding gzip .js.gz
+    AddEncoding gzip .css.gz
+</IfModule>
+
+# ========== PERMITIR GOOGLE OAUTH (auth.html) ==========
+# Nota: Diretivas SecRuleEngine causaram erro 500
+# cPanel não permite desabilitar Mod_Security via .htaccess
+# Você precisa contactar suporte do servidor

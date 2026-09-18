@@ -1,0 +1,12 @@
+# Proteger página de callback
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Apenas GET e POST permitidos
+    RewriteCond %{REQUEST_METHOD} !^(POST|GET)$
+    RewriteRule ^ - [F]
+</IfModule>
+
+# Headers de segurança
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+</IfModule>

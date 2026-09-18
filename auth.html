@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Processando autenticação...</title>
+    <meta charset="UTF-8">
+    <style>
+        body { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            background: #f0f0f0; 
+            font-family: Arial, sans-serif; 
+        }
+        .container { 
+            text-align: center; 
+            background: white; 
+            padding: 40px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+        }
+        h2 { 
+            color: #333; 
+            margin-top: 0; 
+        }
+        .spinner { 
+            display: inline-block; 
+            width: 20px; 
+            height: 20px; 
+            border: 3px solid #f3f3f3; 
+            border-top: 3px solid #3498db; 
+            border-radius: 50%; 
+            animation: spin 1s linear infinite; 
+        }
+        @keyframes spin { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Autenticando...</h2>
+        <div class="spinner"></div>
+        <p>Um momento...</p>
+    </div>
+
+    <form id="oauthForm" method="POST" action="oauth_handler.php" style="display: none;">
+        <!-- Os inputs serão preenchidos via JavaScript -->
+    </form>
+
+    <script>
+        // OAuth Redirect - Contorna Mod_Security bloqueando URLs grandes
+        // 
+        // PROBLEMA: Google envia ?code=...&state=...&iss=...&authuser=...&prompt=...
+        //           Mod_Security bloqueia porque URL tem muitos parâmetros
+        //
+        // SOLUÇÃO: Este arquivo HTML recebe GET, converte para POST (no body)
+        //         POST não tem mesmas restrições de URL que GET
+        //
+        // Fluxo:
+        // Google → auth.html?code=...&iss=...&authuser=... (Mod_Security permite HTML)
+        //          ↓ (JavaScript extrai params e faz POST)
+        //        oauth_handler.php via POST (sem URL params - Mod_Security aceita!)
+        //          ↓
+        //        ✅ Login bem-sucedido!
+
+        // Captura parâmetros da URL (vindo do Google)
+        const params = new URLSearchParams(window.location.search);
+        
+        // Log para debug (ver na console do navegador)
+        console.log('=== OAuth Redirect via auth.html ===');
+        console.log('Parâmetros recebidos:', Object.fromEntries(params));
+
+        // Cria formulário POST para contornar limites de URL do Mod_Security
+        const form = document.getElementById('oauthForm');
+        
+        // Adiciona cada parâmetro como campo POST (dentro do BODY, não na URL!)
+        // Assim Mod_Security não vê a URL grande
+        for (const [key, value] of params) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = value;
+            form.appendChild(input);
+        }
+        
+        console.log('Submetendo POST para oauth_handler.php com parâmetros no body');
+        console.log('URL será: POST /oauth_handler.php (sem parâmetros visíveis)');
+        
+        // Aguarda um tick para garantir que DOM está pronto, depois submete
+        setTimeout(() => {
+            form.submit();
+        }, 100);
+    </script>
+</body>
+</html>

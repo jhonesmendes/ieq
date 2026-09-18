@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Completo - Recuperação de Senha</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+        }
+        .header h1 {
+            color: #333;
+            margin: 0 0 5px;
+        }
+        .header p {
+            color: #666;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 5px solid #667eea;
+        }
+        .test-section.success {
+            background: #f1f8f4;
+            border-left-color: #4caf50;
+        }
+        .test-section.error {
+            background: #fef5f5;
+            border-left-color: #f44336;
+        }
+        .test-section.info {
+            background: #f0f4ff;
+            border-left-color: #2196f3;
+        }
+        .test-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .test-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #555;
+        }
+        .test-content pre {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+        .loading {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+        .checklist li:before {
+            content: "○ ";
+            margin-right: 10px;
+            color: #999;
+        }
+        .success .checklist li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+        }
+        .error .checklist li:before {
+            content: "✗ ";
+            color: #f44336;
+            font-weight: bold;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        .tab-btn {
+            padding: 10px 15px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+            color: #999;
+            transition: all 0.3s;
+        }
+        .tab-btn.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔐 Teste Completo - Recuperação de Senha</h1>
+        <p>Verifique se o sistema está funcionando corretamente</p>
+    </div>
+
+    <div class="container">
+        <!-- Status Inicial -->
+        <div class="test-section info">
+            <div class="test-title">ℹ️ Ambiente</div>
+            <div class="test-content">
+                <ul class="checklist">
+                    <li>Acessando: <strong id="url-acessada"></strong></li>
+                    <li>Data: <strong id="data-acesso"></strong></li>
+                    <li>Navegador: <strong id="navegador"></strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Testes de Configuração -->
+        <div class="test-section">
+            <div class="test-title">📋 1. Verificar Configuração</div>
+            <div class="test-content">
+                <p>Clique abaixo para verificar se o servidor está configurado corretamente:</p>
+                <div class="button-group">
+                    <button class="btn-primary" onclick="testarConfiguracao()">🔍 Verificar Configuração</button>
+                </div>
+                <div id="resultado-config"></div>
+            </div>
+        </div>
+
+        <!-- Teste de API -->
+        <div class="test-section">
+            <div class="test-title">🔗 2. Testar API</div>
+            <div class="test-content">
+                <p>Teste se a API está respondendo corretamente:</p>
+                <div class="button-group">
+                    <button class="btn-primary" onclick="testarAPI()">🚀 Testar API</button>
+                </div>
+                <div id="resultado-api"></div>
+            </div>
+        </div>
+
+        <!-- Teste de Email -->
+        <div class="test-section">
+            <div class="test-title">📧 3. Testar Envio de Email</div>
+            <div class="test-content">
+                <p>Digite seu email para testar o envio:</p>
+                <div style="margin: 15px 0;">
+                    <input type="email" id="email-teste" placeholder="seu@email.com" style="padding: 10px; border: 1px solid #ddd; border-radius: 4px; width: 100%; max-width: 300px;">
+                </div>
+                <div class="button-group">
+                    <button class="btn-primary" onclick="testarEmail()">📨 Enviar Email de Teste</button>
+                </div>
+                <div id="resultado-email"></div>
+            </div>
+        </div>
+
+        <!-- Links Úteis -->
+        <div class="test-section info">
+            <div class="test-title">🔗 Links Úteis</div>
+            <div class="test-content">
+                <p>Acesse essas páginas para testara o sistema:</p>
+                <ul style="list-style: disc; padding-left: 20px;">
+                    <li><a href="/?page=recuperar_senha" target="_blank" style="color: #667eea; text-decoration: none; font-weight: 600;">→ Página de Recuperação</a></li>
+                    <li><a href="/?page=login" target="_blank" style="color: #667eea; text-decoration: none; font-weight: 600;">→ Página de Login</a></li>
+                    <li><a href="/scripts/debug_recuperacao_senha_completo.php" target="_blank" style="color: #667eea; text-decoration: none; font-weight: 600;">→ Debug Completo</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Checklist Final -->
+        <div class="test-section">
+            <div class="test-title">✅ Checklist de Verificação</div>
+            <div class="test-content">
+                <ul class="checklist">
+                    <li>Configuração do servidor está correta</li>
+                    <li>Banco de dados está conectado</li>
+                    <li>Tabela recuperacao_senha existe</li>
+                    <li>Funções de autenticação existem</li>
+                    <li>Email SMTP está configurado</li>
+                    <li>Página de recuperação carrega</li>
+                    <li>API responde corretamente</li>
+                    <li>Email é enviado com sucesso</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Preencher informações da página
+        document.getElementById('url-acessada').textContent = window.location.href;
+        document.getElementById('data-acesso').textContent = new Date().toLocaleString('pt-BR');
+        document.getElementById('navegador').textContent = navigator.userAgent.split('(')[1]?.split(')')[0] || navigator.userAgent;
+
+        // Teste de Configuração
+        function testarConfiguracao() {
+            const resultado = document.getElementById('resultado-config');
+            resultado.innerHTML = '<p><span class="loading"></span>Testando...</p>';
+
+            fetch('/scripts/teste_rapido_recuperacao.php')
+                .then(res => res.json())
+                .then(data => {
+                    let html = '<div class="test-section success"><ul class="checklist">';
+                    
+                    for (const [chave, valor] of Object.entries(data)) {
+                        if (typeof valor === 'object') {
+                            for (const [sub, subValor] of Object.entries(valor)) {
+                                html += `<li>${sub}: ${subValor}</li>`;
+                            }
+                        } else {
+                            html += `<li>${chave}: ${valor}</li>`;
+                        }
+                    }
+                    
+                    html += '</ul></div>';
+                    resultado.innerHTML = html;
+                })
+                .catch(err => {
+                    resultado.innerHTML = `<div class="test-section error"><strong>❌ Erro:</strong> ${err.message}</div>`;
+                });
+        }
+
+        // Teste de API
+        function testarAPI() {
+            const resultado = document.getElementById('resultado-api');
+            resultado.innerHTML = '<p><span class="loading"></span>Testando API...</p>';
+
+            // Teste sem parâmetros (deve falhar por validação, mas responde JSON)
+            fetch('/api/index.php?acao=solicitar_recuperacao_senha', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: 'email=&csrf_token='
+            })
+            .then(res => {
+                // Primeiro pegar o texto bruto
+                return res.text().then(text => {
+                    console.log('Resposta bruta da API:', text);
+                    return {text, status: res.status};
+                });
+            })
+            .then(({text, status}) => {
+                let html = '<div class="test-section">';
+                
+                // Se a resposta está vazia
+                if (!text || text.trim() === '') {
+                    html += '<strong>❌ API retornou VAZIO</strong><br>';
+                    html += 'Status HTTP: ' + status + '<br>';
+                    html += 'Verifique se o arquivo da API existe';
+                } else {
+                    // Tentar fazer parse
+                    try {
+                        const data = JSON.parse(text);
+                        html += '<strong>✅ API respondeu com JSON</strong><br><br>';
+                        html += 'Resposta:<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                        html = '<div class="test-section success">' + html;
+                    } catch(e) {
+                        // Não é JSON válido - mostrar resposta bruta
+                        html += '<strong>❌ Resposta não é JSON válido</strong><br>';
+                        html += 'Status HTTP: ' + status + '<br>';
+                        html += 'Resposta bruta:<pre>' + text.substring(0, 500) + '</pre>';
+                    }
+                }
+                
+                html += '</div>';
+                resultado.innerHTML = html;
+            })
+            .catch(err => {
+                resultado.innerHTML = `<div class="test-section error"><strong>❌ Erro de conexão:</strong> ${err.message}</div>`;
+            });
+        }
+
+        // Teste de Email
+        function testarEmail() {
+            const email = document.getElementById('email-teste').value;
+            const resultado = document.getElementById('resultado-email');
+
+            if (!email || !email.includes('@')) {
+                resultado.innerHTML = '<div class="test-section error"><strong>❌</strong> Digite um email válido</div>';
+                return;
+            }
+
+            resultado.innerHTML = '<p><span class="loading"></span>Enviando email...</p>';
+
+            // Obter token CSRF da página
+            let csrfToken = 'teste';
+            
+            fetch('/api/index.php?acao=solicitar_recuperacao_senha', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: `email=${encodeURIComponent(email)}&csrf_token=${encodeURIComponent(csrfToken)}`
+            })
+            .then(res => {
+                // Primeiro pegar o texto bruto
+                return res.text().then(text => {
+                    console.log('Resposta bruta da API (Email):', text);
+                    return {text, status: res.status};
+                });
+            })
+            .then(({text, status}) => {
+                let html = '<div class="test-section">';
+                
+                // Se a resposta está vazia
+                if (!text || text.trim() === '') {
+                    html += '<strong>❌ API retornou VAZIO</strong><br>';
+                    html += 'Status HTTP: ' + status + '<br>';
+                    html += 'Verifique se o arquivo da API existe';
+                } else {
+                    // Tentar fazer parse
+                    try {
+                        const data = JSON.parse(text);
+                        if (data.status === 'sucesso') {
+                            html = '<div class="test-section success">';
+                            html += `<strong>✅ ${data.mensagem}</strong>`;
+                        } else {
+                            html = '<div class="test-section error">';
+                            html += `<strong>❌ ${data.mensagem || 'Erro desconhecido'}</strong>`;
+                        }
+                    } catch(e) {
+                        // Não é JSON válido - mostrar resposta bruta
+                        html += '<strong>❌ Resposta não é JSON válido</strong><br>';
+                        html += 'Status HTTP: ' + status + '<br>';
+                        html += 'Resposta bruta:<pre>' + text.substring(0, 500) + '</pre>';
+                    }
+                }
+                
+                html += '</div>';
+                resultado.innerHTML = html;
+            })
+            .catch(err => {
+                resultado.innerHTML = `<div class="test-section error"><strong>❌ Erro de conexão:</strong> ${err.message}</div>`;
+            });
+        }
+
+        // Teste automático ao carregar (apenas info)
+        console.log('%c🔐 Sistema de Recuperação de Senha', 'font-size: 16px; font-weight: bold; color: #667eea;');
+        console.log('Use os botões acima para testar cada componente');
+    </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+# Proteger pasta config - apenas permite PHP direto
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Bloquear acesso a arquivos não-PHP
+    RewriteRule "\.json$|\.env|\.db" - [F,L]
+</IfModule>

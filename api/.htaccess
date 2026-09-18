@@ -1,0 +1,13 @@
+# Proteger pasta API
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /api/
+    
+    # Redirecionar requisições para index.php (router principal)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule "^.*$" index.php [QSA,L]
+</IfModule>
+
+# Bloquear listagem de diretório
+Options -Indexes

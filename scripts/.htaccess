@@ -1,0 +1,16 @@
+# Permitir acesso aos scripts de administração
+<IfModule mod_rewrite.c>
+    RewriteEngine Off
+</IfModule>
+
+# Permitir acesso a arquivos PHP
+<IfModule mod_php.c>
+    AddType application/x-httpd-php .php
+</IfModule>
+
+# Headers de segurança
+<IfModule mod_headers.c>
+    Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+</IfModule>

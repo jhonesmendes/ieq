@@ -1,0 +1,440 @@
+/* ============================================================
+   App do gestor da igreja — 4 abas (Início, Eventos, Pessoas,
+   Perfil). Mesmo sistema visual do app do líder (lider-app.css),
+   com um roxo levemente mais frio pra diferenciar os dois papéis.
+   ============================================================ */
+
+:root {
+    --igr-bg: #f4f4fb;
+    --igr-card: #ffffff;
+    --igr-line: #ecebf5;
+    --igr-ink: #1f2340;
+    --igr-ink-soft: #8b88a0;
+    --igr-roxo: #3d4c8c;
+    --igr-roxo-escuro: #2a3563;
+    --igr-ouro: #d9a836;
+    --igr-verde-bg: #dcfce7;
+    --igr-verde: #16a34a;
+    --igr-vermelho-bg: #fee2e2;
+    --igr-vermelho: #dc2626;
+}
+
+body.app-igreja-simplificado {
+    background: var(--igr-bg) !important;
+}
+
+body.app-igreja-simplificado .container-main {
+    display: block;
+    background: var(--igr-bg);
+}
+
+body.app-igreja-simplificado .main-content {
+    padding: 0 !important;
+    background: var(--igr-bg);
+    background-image: none;
+    max-width: 480px;
+    margin-inline: auto;
+    min-height: 100vh;
+}
+
+body.app-igreja-simplificado .page-header {
+    display: none;
+}
+
+.igreja-app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ---------- Cabeçalho ---------- */
+.igreja-header {
+    background: linear-gradient(160deg, var(--igr-roxo) 0%, var(--igr-roxo-escuro) 100%);
+    color: white;
+    padding: calc(20px + env(safe-area-inset-top)) 20px 24px;
+    border-radius: 0 0 28px 28px;
+}
+
+.igreja-saudacao {
+    margin: 0;
+    font-size: 13px;
+    opacity: 0.75;
+}
+
+.igreja-nome-usuario {
+    margin: 2px 0 18px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.igreja-card-nome {
+    background: var(--igr-ouro);
+    color: #2b1f00;
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.igreja-card-nome .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2b1f00;
+    flex-shrink: 0;
+}
+
+.igreja-card-nome strong {
+    display: block;
+    font-size: 14px;
+}
+
+.igreja-card-nome span {
+    display: block;
+    font-size: 12px;
+    opacity: 0.8;
+    margin-top: 2px;
+}
+
+/* ---------- Conteúdo / abas ---------- */
+.igreja-content {
+    flex: 1;
+    padding: 18px 16px calc(24px + env(safe-area-inset-bottom));
+}
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.is-active {
+    display: block;
+}
+
+.secao-titulo {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--igr-ink-soft);
+    margin: 0 0 12px;
+}
+
+.secao-header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.secao-header-flex .secao-titulo {
+    margin: 0;
+}
+
+.stats-hint {
+    font-size: 11px;
+    color: var(--igr-ink-soft);
+    margin: 8px 0 0;
+}
+
+/* ---------- Cards de estatística ---------- */
+.stats-grid-igreja {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.stat-mini {
+    background: var(--igr-card);
+    border-radius: 16px;
+    padding: 14px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(31, 35, 64, 0.06);
+}
+
+.stat-mini-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.stat-icon-roxo { background: #e6e9fb; color: #3d4c8c; }
+.stat-icon-verde { background: var(--igr-verde-bg); color: var(--igr-verde); }
+.stat-icon-azul { background: #dbeafe; color: #1d4ed8; }
+.stat-icon-amarelo { background: #fef3c7; color: #b45309; }
+
+.stat-mini strong {
+    font-size: 20px;
+    color: var(--igr-ink);
+    line-height: 1;
+}
+
+.stat-mini span {
+    font-size: 11px;
+    color: var(--igr-ink-soft);
+}
+
+/* ---------- Cards genéricos ---------- */
+.igreja-card {
+    background: var(--igr-card);
+    border-radius: 18px;
+    padding: 16px;
+    margin-top: 12px;
+    box-shadow: 0 2px 8px rgba(31, 35, 64, 0.06);
+}
+
+/* ---------- Listas (eventos, pessoas) ---------- */
+.lista-igreja {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.lista-vazia {
+    text-align: center;
+    color: var(--igr-ink-soft);
+    padding: 24px 0;
+    font-size: 13px;
+}
+
+.item-igreja {
+    background: var(--igr-card);
+    border-radius: 16px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(31, 35, 64, 0.05);
+}
+
+.item-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.item-info strong {
+    font-size: 14px;
+    color: var(--igr-ink);
+    overflow-wrap: break-word;
+}
+
+.item-info span {
+    font-size: 11.5px;
+    color: var(--igr-ink-soft);
+}
+
+.avatar-membro {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+    background: #e6e9fb;
+    color: #3d4c8c;
+}
+
+.avatar-evento {
+    background: #fef3c7;
+    color: #b45309;
+    font-size: 15px;
+}
+
+.avatar-grande {
+    width: 52px;
+    height: 52px;
+    font-size: 17px;
+}
+
+.btn-remover {
+    border: none;
+    background: transparent;
+    color: var(--igr-vermelho);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px;
+    flex-shrink: 0;
+}
+
+/* ---------- Botões / formulários inline ---------- */
+.btn-add-mini {
+    border: none;
+    background: var(--igr-roxo);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.btn-add-visitante {
+    width: 100%;
+    padding: 12px;
+    border: 2px dashed #d8d5ee;
+    background: #f8f8fd;
+    color: var(--igr-roxo);
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    margin: 12px 0;
+}
+
+.form-inline-card {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    background: var(--igr-card);
+    border-radius: 16px;
+    padding: 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(31, 35, 64, 0.06);
+}
+
+.form-inline-card input,
+.form-inline-card textarea {
+    border: 1px solid var(--igr-line);
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 13px;
+    font-family: inherit;
+    width: 100%;
+}
+
+.form-inline-card textarea {
+    min-height: 44px;
+    resize: vertical;
+}
+
+.form-inline-acoes {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-mini-primario, .btn-mini-secundario {
+    flex: 1;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-mini-primario { background: var(--igr-roxo); color: white; }
+.btn-mini-secundario { background: var(--igr-line); color: var(--igr-ink); }
+
+/* ---------- Segmentado (tipo de pessoa) ---------- */
+.segmentado {
+    display: flex;
+    gap: 6px;
+    background: var(--igr-line);
+    border-radius: 14px;
+    padding: 4px;
+    margin-bottom: 4px;
+    overflow-x: auto;
+}
+
+.segmento {
+    flex: 1;
+    white-space: nowrap;
+    border: none;
+    background: transparent;
+    color: var(--igr-ink-soft);
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 8px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.segmento.is-active {
+    background: var(--igr-card);
+    color: var(--igr-roxo);
+    box-shadow: 0 1px 4px rgba(31, 35, 64, 0.12);
+}
+
+/* ---------- Aba Perfil ---------- */
+.perfil-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.perfil-card div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.perfil-card strong {
+    font-size: 15px;
+    color: var(--igr-ink);
+}
+
+.perfil-card span {
+    font-size: 12px;
+    color: var(--igr-ink-soft);
+}
+
+.btn-sair {
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+    padding: 14px;
+    border-radius: 14px;
+    background: var(--igr-vermelho-bg);
+    color: var(--igr-vermelho);
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+/* ---------- Barra de abas fixa no rodapé ---------- */
+.igreja-tabbar {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    background: var(--igr-card);
+    border-top: 1px solid var(--igr-line);
+    padding: 8px 4px calc(8px + env(safe-area-inset-bottom));
+}
+
+.igreja-tabbar .tab-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    border: none;
+    background: transparent;
+    color: var(--igr-ink-soft);
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 4px 0;
+    cursor: pointer;
+}
+
+.igreja-tabbar .tab-icon {
+    font-size: 18px;
+}
+
+.igreja-tabbar .tab-btn.is-active {
+    color: var(--igr-roxo);
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste API V2</title>
+    <style>
+        body {
+            font-family: monospace;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #764ba2;
+        }
+        #resultado {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .success { background: #e8f5e9; }
+        .error { background: #ffebee; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Teste API V2</h1>
+        <p>Testando a API de recuperação de senha com a versão 2 simplificada</p>
+        
+        <button onclick="testaAPI()">Testar API V2</button>
+        <button onclick="testaAPIOriginal()">Testar API Original</button>
+        
+        <h3>Resultado:</h3>
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        function testaAPI() {
+            const resultado = document.getElementById('resultado');
+            resultado.textContent = 'Testando...';
+            
+            fetch('/api/teste_v2.php?acao=solicitar_recuperacao_senha', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: 'email=test@example.com&csrf_token=teste'
+            })
+            .then(res => res.text())
+            .then(text => {
+                resultado.className = 'success';
+                resultado.textContent = text;
+                console.log('Resposta:', text);
+            })
+            .catch(err => {
+                resultado.className = 'error';
+                resultado.textContent = '❌ Erro: ' + err.message;
+                console.error(err);
+            });
+        }
+        
+        function testaAPIOriginal() {
+            const resultado = document.getElementById('resultado');
+            resultado.textContent = 'Testando...';
+            
+            fetch('/api/index.php?acao=solicitar_recuperacao_senha', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: 'email=test@example.com&csrf_token=teste'
+            })
+            .then(res => res.text())
+            .then(text => {
+                resultado.className = text ? 'success' : 'error';
+                resultado.textContent = text || '(resposta vazia)';
+                console.log('Resposta:', text);
+            })
+            .catch(err => {
+                resultado.className = 'error';
+                resultado.textContent = '❌ Erro: ' + err.message;
+                console.error(err);
+            });
+        }
+    </script>
+</body>
+</html>

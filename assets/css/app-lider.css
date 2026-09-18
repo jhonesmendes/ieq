@@ -1,0 +1,342 @@
+/* ============================================================
+   Modo "app" para líder de célula: sem menu lateral, tema escuro
+   próprio (roxo/verde), com cara de aplicativo nativo de celular.
+   Tudo aqui é escopado em body.app-lider-simplificado para não
+   afetar a visão de admin/pastor no computador.
+   ============================================================ */
+
+body.app-lider-simplificado {
+    --app-bg: #171320;
+    --app-surface: #221c30;
+    --app-surface-2: #2b2440;
+    --app-line: #372f4a;
+    --app-text: #f1eefb;
+    --app-text-soft: #b6aec9;
+    --app-accent: #8b7cf6;
+    --app-accent-2: #a78bfa;
+    --app-good: #4ade80;
+    --app-good-bg: #1c3327;
+    --app-bad: #f87171;
+    --app-bad-bg: #3a1f24;
+    --app-warn: #fbbf24;
+    --app-warn-bg: #3a2c17;
+
+    background: var(--app-bg);
+    color-scheme: dark;
+}
+
+.app-bar-lider {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    padding-top: calc(14px + env(safe-area-inset-top));
+    background: var(--app-bg);
+    color: var(--app-text);
+    border-bottom: 1px solid var(--app-line);
+}
+
+.app-bar-lider-nome {
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.01em;
+}
+
+.app-bar-lider-sair {
+    font-size: 18px;
+    text-decoration: none;
+    line-height: 1;
+    padding: 6px 10px;
+    border-radius: 8px;
+    color: var(--app-text-soft);
+    transition: background 0.15s ease;
+}
+
+.app-bar-lider-sair:hover,
+.app-bar-lider-sair:active {
+    background: var(--app-surface);
+    color: var(--app-text);
+}
+
+/* Sem sidebar: o conteúdo ocupa a tela toda, sem o respiro largo de desktop */
+body.app-lider-simplificado .container-main {
+    display: block;
+    min-height: 100vh;
+    background: var(--app-bg);
+}
+
+body.app-lider-simplificado .main-content {
+    padding: 16px;
+    padding-bottom: calc(100px + env(safe-area-inset-bottom));
+    background: var(--app-bg);
+    background-image: none;
+    max-width: 480px;
+    margin-inline: auto;
+    color: var(--app-text);
+}
+
+@media (min-width: 640px) {
+    body.app-lider-simplificado .main-content {
+        padding: 24px;
+    }
+}
+
+/* ---------- Cabeçalho da página ---------- */
+body.app-lider-simplificado .page-header {
+    margin-bottom: 16px;
+}
+
+body.app-lider-simplificado .page-header h1,
+body.app-lider-simplificado .page-header p {
+    color: var(--app-text-soft);
+    font-size: 13px;
+}
+
+body.app-lider-simplificado .page-header h1 {
+    display: none;
+}
+
+/* ---------- Cabeçalho fixo da célula: cartão roxo, como no mockup ---------- */
+body.app-lider-simplificado .celula-fixa-header {
+    background: linear-gradient(135deg, var(--app-accent) 0%, var(--app-accent-2) 100%);
+    border-radius: 20px;
+    box-shadow: 0 8px 24px -8px rgba(139, 124, 246, 0.5);
+}
+
+/* ---------- Cards genéricos (foto, membros, filtros) ---------- */
+body.app-lider-simplificado .card,
+body.app-lider-simplificado .foto-reuniao-section,
+body.app-lider-simplificado #membrosCard,
+body.app-lider-simplificado .presenca-filters {
+    background: var(--app-surface);
+    border: 1px solid var(--app-line);
+    border-radius: 20px;
+    color: var(--app-text);
+    box-shadow: none;
+}
+
+body.app-lider-simplificado .card::before {
+    display: none;
+}
+
+body.app-lider-simplificado .card:hover,
+body.app-lider-simplificado #membrosCard:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--app-line);
+}
+
+body.app-lider-simplificado .foto-reuniao-section h3 {
+    color: var(--app-text);
+}
+
+body.app-lider-simplificado .foto-reuniao-section p,
+body.app-lider-simplificado .card-subtitle {
+    color: var(--app-text-soft);
+}
+
+/* Filtro de data (único controle "de formulário" que sobra pro líder) */
+body.app-lider-simplificado .presenca-filters {
+    padding: 14px;
+}
+
+body.app-lider-simplificado .presenca-filters label {
+    color: var(--app-text-soft);
+}
+
+body.app-lider-simplificado .presenca-filters input,
+body.app-lider-simplificado .presenca-filters select {
+    background: var(--app-surface-2);
+    border: 1px solid var(--app-line);
+    color: var(--app-text);
+    border-radius: 10px;
+}
+
+body.app-lider-simplificado #celulaFilterItem {
+    display: none !important;
+}
+
+body.app-lider-simplificado .presenca-filters button {
+    display: none;
+}
+
+/* ---------- Área de foto ---------- */
+body.app-lider-simplificado .foto-preview-reuniao {
+    background: var(--app-surface-2);
+    border: 2px dashed var(--app-accent);
+    border-radius: 16px;
+}
+
+body.app-lider-simplificado .foto-placeholder-reuniao {
+    color: var(--app-text-soft);
+}
+
+body.app-lider-simplificado .foto-upload-actions .btn-primary,
+body.app-lider-simplificado #btnSalvarFotoReuniao {
+    background: var(--app-surface-2);
+    color: var(--app-text);
+    border: 1px solid var(--app-line);
+    border-radius: 12px;
+}
+
+body.app-lider-simplificado .foto-upload-actions small {
+    color: var(--app-text-soft);
+}
+
+body.app-lider-simplificado #observacoes_reuniao {
+    background: var(--app-surface-2);
+    border: 1px solid var(--app-line);
+    color: var(--app-text);
+    border-radius: 12px;
+}
+
+/* ---------- Cabeçalho "Membros da Célula" ---------- */
+body.app-lider-simplificado .card-header-presenca {
+    background: transparent;
+    border-bottom: 1px solid var(--app-line);
+}
+
+body.app-lider-simplificado .card-header-presenca h2,
+body.app-lider-simplificado .legenda-item {
+    color: var(--app-text);
+}
+
+body.app-lider-simplificado .legenda-item {
+    color: var(--app-text-soft);
+}
+
+/* ---------- Lista de membros: cartão escuro + avatar com iniciais ---------- */
+body.app-lider-simplificado .presenca-table tr {
+    background: var(--app-surface-2);
+    box-shadow: none;
+}
+
+body.app-lider-simplificado .presenca-table tr:has(td[colspan]) {
+    background: transparent;
+}
+
+body.app-lider-simplificado .presenca-table td:first-child strong,
+body.app-lider-simplificado .presenca-table td {
+    color: var(--app-text);
+}
+
+body.app-lider-simplificado .row-visitante {
+    background: var(--app-warn-bg) !important;
+}
+
+body.app-lider-simplificado .badge-visitante {
+    background: var(--app-warn-bg);
+    color: var(--app-warn);
+}
+
+body.app-lider-simplificado .pill-presente-fixo {
+    background: var(--app-good-bg);
+    color: var(--app-good);
+    border: none;
+}
+
+body.app-lider-simplificado .btn-remover-visitante {
+    color: var(--app-bad);
+}
+
+/* Toggle Presente/Faltou vira duas pílulas, como no mockup */
+body.app-lider-simplificado .presenca-status-toggle {
+    border: none;
+    border-radius: 20px;
+    overflow: visible;
+    gap: 6px;
+    display: flex;
+}
+
+body.app-lider-simplificado .toggle-btn {
+    border-radius: 20px;
+    background: var(--app-surface);
+    color: var(--app-text-soft);
+    font-weight: 600;
+}
+
+body.app-lider-simplificado .toggle-btn.presente-btn.is-active {
+    background: var(--app-good-bg);
+    color: var(--app-good);
+}
+
+body.app-lider-simplificado .toggle-btn.ausente-btn.is-active {
+    background: var(--app-bad-bg);
+    color: var(--app-bad);
+}
+
+/* Avatar circular com iniciais, gerado via JS (ver presenca.php) */
+body.app-lider-simplificado .presenca-table td:first-child {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+body.app-lider-simplificado .avatar-membro {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--app-accent) 0%, var(--app-accent-2) 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+body.app-lider-simplificado .row-visitante .avatar-membro {
+    background: linear-gradient(135deg, var(--app-warn) 0%, #f97316 100%);
+}
+
+/* ---------- Visitante inline ---------- */
+body.app-lider-simplificado .visitante-inline {
+    border-top: 1px solid var(--app-line);
+}
+
+body.app-lider-simplificado .btn-add-visitante {
+    background: var(--app-surface-2);
+    border: 2px dashed var(--app-accent);
+    color: var(--app-accent-2);
+    border-radius: 14px;
+}
+
+body.app-lider-simplificado .add-visitante-form input {
+    background: var(--app-surface-2);
+    border: 1px solid var(--app-line);
+    color: var(--app-text);
+    border-radius: 10px;
+}
+
+/* ---------- Botão de salvar: verde, fixo no rodapé ---------- */
+body.app-lider-simplificado .salvar-reuniao-box {
+    background: var(--app-bg);
+    border-top: 1px solid var(--app-line);
+    max-width: 480px;
+    margin-inline: auto;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+body.app-lider-simplificado .btn-salvar-reuniao {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    border-radius: 16px;
+    box-shadow: 0 8px 20px -6px rgba(34, 197, 94, 0.5);
+}
+
+/* ---------- Relatório (mantém legível caso o líder abra) ---------- */
+body.app-lider-simplificado .relatorio-section .card,
+body.app-lider-simplificado .stat-card {
+    color: var(--app-text);
+}
+
+body.app-lider-simplificado .relatorio-filters select,
+body.app-lider-simplificado .relatorio-filters input {
+    background: var(--app-surface-2);
+    border: 1px solid var(--app-line);
+    color: var(--app-text);
+}

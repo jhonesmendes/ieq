@@ -1,0 +1,28 @@
+# Credenciais reais — NUNCA subir pro Git (senha de banco, SMTP, Google OAuth)
+.env
+
+# Arquivos de upload (fotos reais de membros/reuniões — dados pessoais)
+uploads/*
+!uploads/.gitkeep
+
+# Banco de dados (contém dados reais de membros — nunca versionar)
+data/*.db
+data/*.db-journal
+data/backups/
+
+# Logs (podem conter dados de sessão/depuração sensíveis)
+*.log
+error_log
+api/error_log
+pages/error_log
+scripts/error_log
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo

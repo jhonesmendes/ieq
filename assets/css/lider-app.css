@@ -1,0 +1,525 @@
+/* ============================================================
+   App do líder — 4 abas (Início, Membros, Reuniões, Perfil).
+   Tema claro com cabeçalho roxo escuro, no estilo de um app
+   nativo de celular. Usado só em pages/presenca_lider_app.php.
+   ============================================================ */
+
+:root {
+    --lider-bg: #f4f4fb;
+    --lider-card: #ffffff;
+    --lider-line: #ecebf5;
+    --lider-ink: #241f3d;
+    --lider-ink-soft: #8b88a0;
+    --lider-roxo: #4c3d7d;
+    --lider-roxo-escuro: #342a58;
+    --lider-ouro: #d9a836;
+    --lider-verde-bg: #dcfce7;
+    --lider-verde: #16a34a;
+    --lider-vermelho-bg: #fee2e2;
+    --lider-vermelho: #dc2626;
+}
+
+body.app-lider-simplificado {
+    background: var(--lider-bg) !important;
+}
+
+body.app-lider-simplificado .container-main {
+    display: block;
+    background: var(--lider-bg);
+}
+
+body.app-lider-simplificado .main-content {
+    padding: 0 !important;
+    background: var(--lider-bg);
+    background-image: none;
+    max-width: 480px;
+    margin-inline: auto;
+    min-height: 100vh;
+}
+
+body.app-lider-simplificado .page-header {
+    display: none;
+}
+
+.lider-app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ---------- Cabeçalho ---------- */
+.lider-header {
+    background: linear-gradient(160deg, var(--lider-roxo) 0%, var(--lider-roxo-escuro) 100%);
+    color: white;
+    padding: calc(20px + env(safe-area-inset-top)) 20px 24px;
+    border-radius: 0 0 28px 28px;
+}
+
+.lider-saudacao {
+    margin: 0;
+    font-size: 13px;
+    opacity: 0.75;
+}
+
+.lider-nome {
+    margin: 2px 0 18px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.reuniao-card-hoje {
+    background: var(--lider-ouro);
+    color: #2b1f00;
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.reuniao-card-hoje .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2b1f00;
+    flex-shrink: 0;
+}
+
+.reuniao-card-hoje strong {
+    display: block;
+    font-size: 14px;
+}
+
+.reuniao-card-hoje span {
+    display: block;
+    font-size: 12px;
+    opacity: 0.8;
+    margin-top: 2px;
+}
+
+/* ---------- Conteúdo / abas ---------- */
+.lider-content {
+    flex: 1;
+    padding: 18px 16px calc(24px + env(safe-area-inset-bottom));
+}
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.is-active {
+    display: block;
+}
+
+.secao-titulo {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--lider-ink-soft);
+    margin: 0 0 12px;
+}
+
+.secao-header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 22px;
+}
+
+.secao-header-flex .secao-titulo {
+    margin: 0;
+}
+
+.secao-header-flex input[type="date"] {
+    border: 1px solid var(--lider-line);
+    border-radius: 10px;
+    padding: 6px 10px;
+    font-size: 12px;
+    color: var(--lider-ink);
+    background: var(--lider-card);
+}
+
+/* ---------- Cards de estatística ---------- */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.stat-mini {
+    background: var(--lider-card);
+    border-radius: 16px;
+    padding: 14px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(36, 31, 61, 0.06);
+}
+
+.stat-mini-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.stat-icon-roxo { background: #ede9fe; color: #7c5cd6; }
+.stat-icon-verde { background: var(--lider-verde-bg); color: var(--lider-verde); }
+.stat-icon-amarelo { background: #fef3c7; color: #b45309; }
+
+.stat-mini strong {
+    font-size: 20px;
+    color: var(--lider-ink);
+    line-height: 1;
+}
+
+.stat-mini span {
+    font-size: 11px;
+    color: var(--lider-ink-soft);
+}
+
+/* ---------- Cards genéricos ---------- */
+.lider-card {
+    background: var(--lider-card);
+    border-radius: 18px;
+    padding: 16px;
+    margin-top: 12px;
+    box-shadow: 0 2px 8px rgba(36, 31, 61, 0.06);
+}
+
+.foto-preview-reuniao {
+    height: 120px;
+    border-radius: 14px;
+    border: 2px dashed #d8d5ee;
+    background: #f8f8fd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.foto-preview-reuniao img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.foto-placeholder-reuniao {
+    text-align: center;
+    color: var(--lider-ink-soft);
+}
+
+.foto-placeholder-reuniao span {
+    font-size: 28px;
+    display: block;
+}
+
+.foto-placeholder-reuniao p {
+    margin: 4px 0 0;
+    font-size: 12px;
+}
+
+#observacoes_reuniao {
+    width: 100%;
+    margin-top: 10px;
+    border: 1px solid var(--lider-line);
+    border-radius: 10px;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 13px;
+    resize: vertical;
+    min-height: 44px;
+}
+
+/* ---------- Listas de membros / visitantes ---------- */
+.membros-lista, .reunioes-lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.lista-vazia {
+    text-align: center;
+    color: var(--lider-ink-soft);
+    padding: 24px 0;
+    font-size: 13px;
+}
+
+.membro-item {
+    background: var(--lider-card);
+    border-radius: 16px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(36, 31, 61, 0.05);
+}
+
+.membro-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.membro-info strong {
+    font-size: 14px;
+    color: var(--lider-ink);
+    overflow-wrap: break-word;
+}
+
+.membro-info span {
+    font-size: 11.5px;
+    color: var(--lider-ink-soft);
+}
+
+.avatar-membro {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+    background: #ede9fe;
+    color: #7c5cd6;
+}
+
+.avatar-grande {
+    width: 52px;
+    height: 52px;
+    font-size: 17px;
+}
+
+.avatar-laranja {
+    background: #ffe4d6;
+    color: #c2410c;
+}
+
+/* Alterna a cor dos avatares na lista, como no mockup */
+.membro-item:nth-of-type(4n+2) .avatar-membro:not(.avatar-laranja) { background: #dcfce7; color: #16a34a; }
+.membro-item:nth-of-type(4n+3) .avatar-membro:not(.avatar-laranja) { background: #fef3c7; color: #b45309; }
+.membro-item:nth-of-type(4n+4) .avatar-membro:not(.avatar-laranja) { background: #fce7f3; color: #db2777; }
+
+.pill {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: none;
+    white-space: nowrap;
+}
+
+.pill-verde { background: var(--lider-verde-bg); color: var(--lider-verde); }
+.pill-vermelho { background: var(--lider-vermelho-bg); color: var(--lider-vermelho); }
+
+.presenca-status-toggle {
+    display: flex;
+    gap: 6px;
+}
+
+.toggle-btn {
+    cursor: pointer;
+    opacity: 0.35;
+    transition: opacity 0.15s ease;
+}
+
+.toggle-btn.is-active {
+    opacity: 1;
+}
+
+.btn-remover-visitante {
+    border: none;
+    background: transparent;
+    color: var(--lider-vermelho);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px;
+}
+
+/* ---------- Visitante inline ---------- */
+.visitante-inline {
+    margin-top: 12px;
+    padding: 0 2px;
+}
+
+.btn-add-visitante {
+    width: 100%;
+    padding: 12px;
+    border: 2px dashed #d8d5ee;
+    background: #f8f8fd;
+    color: var(--lider-roxo);
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.add-visitante-form {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.add-visitante-form input {
+    flex: 1;
+    min-width: 140px;
+    border: 1px solid var(--lider-line);
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 13px;
+}
+
+.btn-mini-primario, .btn-mini-secundario {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-mini-primario { background: var(--lider-roxo); color: white; }
+.btn-mini-secundario { background: var(--lider-line); color: var(--lider-ink); }
+
+/* ---------- Aba Reuniões ---------- */
+.reuniao-item {
+    background: var(--lider-card);
+    border-radius: 16px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(36, 31, 61, 0.05);
+}
+
+.reuniao-foto {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.reuniao-foto-vazia {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f8fd;
+    font-size: 18px;
+}
+
+.reuniao-info strong {
+    display: block;
+    font-size: 13.5px;
+    color: var(--lider-ink);
+}
+
+.reuniao-info span {
+    font-size: 11.5px;
+    color: var(--lider-ink-soft);
+}
+
+/* ---------- Aba Perfil ---------- */
+.perfil-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.perfil-card div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.perfil-card strong {
+    font-size: 15px;
+    color: var(--lider-ink);
+}
+
+.perfil-card span {
+    font-size: 12px;
+    color: var(--lider-ink-soft);
+}
+
+.btn-sair {
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+    padding: 14px;
+    border-radius: 14px;
+    background: var(--lider-vermelho-bg);
+    color: var(--lider-vermelho);
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+/* ---------- Botão flutuante de salvar ---------- */
+.btn-salvar-flutuante {
+    position: sticky;
+    bottom: 12px;
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+    padding: 15px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 8px 20px -6px rgba(34, 197, 94, 0.5);
+    cursor: pointer;
+}
+
+.btn-salvar-flutuante:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+/* ---------- Barra de abas fixa no rodapé ---------- */
+.lider-tabbar {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    background: var(--lider-card);
+    border-top: 1px solid var(--lider-line);
+    padding: 8px 4px calc(8px + env(safe-area-inset-bottom));
+}
+
+.tab-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    border: none;
+    background: transparent;
+    color: var(--lider-ink-soft);
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 4px 0;
+    cursor: pointer;
+}
+
+.tab-icon {
+    font-size: 18px;
+}
+
+.tab-btn.is-active {
+    color: var(--lider-roxo);
+}
