@@ -8,7 +8,13 @@ if (function_exists('google_oauth_configurado')) {
     error_log("ERRO: Função google_oauth_configurado não encontrada!");
 }
 ?>
-<link rel="stylesheet" href="assets/css/login.css?v=<?php echo time(); ?>">
+<?php
+    // Site e app carregam CSS separados a partir daqui: o site pode ganhar
+    // um design novo (login.css) sem afetar o do app (login-app.css), e
+    // vice-versa. Ver eh_app_mobile() em config/auth.php.
+    $login_css = eh_app_mobile() ? 'login-app.css' : 'login.css';
+?>
+<link rel="stylesheet" href="assets/css/<?php echo $login_css; ?>?v=<?php echo time(); ?>">
 
 <div class="login-container">
     <div class="login-box">

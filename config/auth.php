@@ -729,6 +729,17 @@ function redefinir_senha($token, $nova_senha) {
 }
 
 /**
+ * Detecta se a requisição veio do app mobile (Capacitor) e não do navegador.
+ * O app se identifica com um sufixo próprio no User-Agent, configurado em
+ * ieq-mobile/capacitor.config.json (server.appendUserAgent). Usado pra
+ * servir CSS/telas diferentes pro app vs pro site, sem duplicar páginas.
+ */
+function eh_app_mobile() {
+    $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
+    return strpos($ua, 'IEQPresencaApp') !== false;
+}
+
+/**
  * Limpar tokens expirados
  */
 function limpar_tokens_expirados() {
