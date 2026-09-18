@@ -8,7 +8,7 @@ if (function_exists('google_oauth_configurado')) {
     error_log("ERRO: Função google_oauth_configurado não encontrada!");
 }
 ?>
-<link rel="stylesheet" href="assets/css/login.css">
+<link rel="stylesheet" href="assets/css/login.css?v=<?php echo time(); ?>">
 
 <div class="login-container">
     <div class="login-box">
@@ -50,7 +50,7 @@ if (function_exists('google_oauth_configurado')) {
                 <label>E-mail</label>
                 <div class="input-com-icone">
                     <span class="campo-icone">✉️</span>
-                    <input type="text" id="email" name="email" required placeholder="seu@email.com">
+                    <input type="text" id="email" name="email" autocomplete="username" required placeholder="seu@email.com">
                 </div>
             </div>
 
@@ -58,7 +58,7 @@ if (function_exists('google_oauth_configurado')) {
                 <label>Senha</label>
                 <div class="input-com-icone">
                     <span class="campo-icone">🔒</span>
-                    <input type="password" id="senha" name="senha" required placeholder="Sua senha">
+                    <input type="password" id="senha" name="senha" autocomplete="current-password" required placeholder="Sua senha">
                     <button type="button" class="botao-ver-senha" id="btnVerSenha" aria-label="Mostrar senha">👁️</button>
                 </div>
             </div>

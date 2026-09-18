@@ -115,14 +115,14 @@ if ($user_id && $page !== 'logout' && !pode_acessar_modulo($page)) {
     <link rel="icon" type="image/x-icon" href="assets/img/logo.ico">
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo.ico">
     
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/sidebar.css">
-    <link rel="stylesheet" href="assets/css/forms.css">
-    <link rel="stylesheet" href="assets/css/mobile.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/sidebar.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/forms.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/mobile.css?v=<?php echo time(); ?>">
     <?php if ($app_lider_simplificado): ?>
-        <link rel="stylesheet" href="assets/css/lider-app.css">
+        <link rel="stylesheet" href="assets/css/lider-app.css?v=<?php echo time(); ?>">
     <?php elseif ($app_gestor_igreja_simplificado): ?>
-        <link rel="stylesheet" href="assets/css/igreja-app.css">
+        <link rel="stylesheet" href="assets/css/igreja-app.css?v=<?php echo time(); ?>">
     <?php endif; ?>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 </head>

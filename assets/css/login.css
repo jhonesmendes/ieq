@@ -106,10 +106,26 @@
     padding: 13px 0;
     font-size: 14px;
     outline: none;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .input-com-icone input::placeholder {
     color: var(--login-campo-placeholder);
+}
+
+/* O navegador/app pinta um fundo próprio (geralmente branco ou amarelado)
+   quando preenche e-mail/senha salvos, ignorando o "background" normal do
+   input — por isso o campo aparecia branco por dentro ao autocompletar. */
+.input-com-icone input:-webkit-autofill,
+.input-com-icone input:-webkit-autofill:hover,
+.input-com-icone input:-webkit-autofill:focus,
+.input-com-icone input:-webkit-autofill:active {
+    -webkit-text-fill-color: white;
+    -webkit-box-shadow: 0 0 0 1000px var(--login-campo-bg) inset;
+    box-shadow: 0 0 0 1000px var(--login-campo-bg) inset;
+    caret-color: white;
+    transition: background-color 9999s ease-in-out 0s;
 }
 
 .botao-ver-senha {
